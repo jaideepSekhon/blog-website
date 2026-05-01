@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/blog")
+@CrossOrigin(origins = "*")
 public class GetController {
     DBConnection database;
     Connection conn;

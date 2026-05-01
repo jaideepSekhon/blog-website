@@ -5,11 +5,13 @@ import com.example.blog_website.Repository.DBConnection;
 import org.hibernate.boot.model.relational.Database;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.sql.Connection;
 
 @RestController
 @RequestMapping("/blog")
+@CrossOrigin(origins = "*")
 public class PostController {
     DBConnection database;
     Connection conn;
