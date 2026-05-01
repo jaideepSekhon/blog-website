@@ -1,20 +1,23 @@
 package com.example.blog_website.Controllers;
 
 import com.example.blog_website.Entity.BlogEntity;
-import com.example.blog_website.Repository.Database;
+import com.example.blog_website.Repository.DBConnection;
+import org.hibernate.boot.model.relational.Database;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.sql.Connection;
 
 @RestController
 @RequestMapping("/blog")
 public class PostController {
-    public Database database;
+    DBConnection database;
+    Connection conn;
 
     @Autowired
-    PostController(Database database){
+    PostController(DBConnection database){
         this.database = database;
+        this.conn = database.getConnection();
     }
 
     @PostMapping()
@@ -22,7 +25,6 @@ public class PostController {
         String title=blogEntity.getTitle();
         String content=blogEntity.getContent();
 
-        database.addBlog(title,content);
-        return "Blog successfully added";
+        return database.addBlog(title,content);
     }
 }

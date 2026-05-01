@@ -1,25 +1,28 @@
 package com.example.blog_website.Controllers;
 
-import com.example.blog_website.Repository.Database;
+import com.example.blog_website.Repository.DBConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Connection;
+
 @RestController
 @RequestMapping("/blog")
 public class DeleteController {
-    Database database;
+    DBConnection database;
+    Connection conn;
 
     @Autowired
-    public DeleteController(Database database) {
+    public DeleteController(DBConnection database) {
         this.database = database;
+        this.conn = database.getConnection();
     }
 
     @DeleteMapping("/{id}")
     public String deleteBlog(@PathVariable("id") int index){
-        database.deleteBlog(index);
-        return "Blog successfully deleted";
+        return database.deleteBlog(index);
     }
 }
