@@ -49,16 +49,19 @@ function BlogList() {
             </tr>
           ) : (
             blogs.map((blog, index) => (
-              <tr key={index}>
-                <td>{index}</td>
+              <tr key={blog.id || index}>
+                <td>{index + 1}</td>
                 <td>
-                  <Link to={`/blog/${index}`}>{blog.title}</Link>
+                  <Link to={`/blog/${blog.id}`} style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>{blog.title}</Link>
+                  <span style={{ fontSize: '0.9em', color: '#666' }}>
+                    {blog.content && blog.content.substring(0, 50)}...
+                  </span>
                 </td>
                 <td>
-                  <Link to={`/edit/${index}`}>
+                  <Link to={`/edit/${blog.id}`}>
                     <button className="action-btn">Edit</button>
                   </Link>
-                  <button className="action-btn delete-btn" onClick={() => deleteBlog(index)}>Delete</button>
+                  <button className="action-btn delete-btn" onClick={() => deleteBlog(blog.id)}>Delete</button>
                 </td>
               </tr>
             ))
