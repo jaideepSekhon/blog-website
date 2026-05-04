@@ -47,13 +47,14 @@ public class DBConnection {
         ArrayList<BlogEntity> list=new ArrayList<>();
         String sql="select * from blog";
         try(PreparedStatement pstmt=connection.prepareStatement(sql)){
-//            pstmt.executeQuery();
             ResultSet rs=pstmt.executeQuery();
 
             while(rs.next()){
+                int id=rs.getInt("id");
                 String title=rs.getString("title");
                 String content=rs.getString("content");
                 BlogEntity blog=new  BlogEntity();
+                blog.setId(id);
                 blog.setTitle(title);
                 blog.setContent(content);
                 list.add(blog);
@@ -62,6 +63,24 @@ public class DBConnection {
             throw new RuntimeException(e);
         }
         return list;
+    }
+
+    public BlogEntity getBlogById(int id) {
+        String sql = "SELECT * FROM blog WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                BlogEntity blog = new BlogEntity();
+                blog.setId(rs.getInt("id"));
+                blog.setTitle(rs.getString("title"));
+                blog.setContent(rs.getString("content"));
+                return blog;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public String updateBlog(int index, String title, String content) {

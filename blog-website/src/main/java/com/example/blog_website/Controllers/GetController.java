@@ -27,7 +27,7 @@ public class GetController {
 
     @GetMapping("/{id}")
     public BlogEntity getBlogById(@PathVariable("id") int index){
-        return database.getBlog().get(index);
+        return database.getBlogById(index);
     }
 
     @GetMapping()
